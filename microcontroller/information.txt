@@ -1,0 +1,29 @@
+FQBN: esp32:esp32:esp32doit-devkit-v1
+Using board 'esp32doit-devkit-v1' from platform in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9
+Using core 'esp32' from platform in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9
+
+In file included from /home/SYED_AMIR_ALI/Arduino/libraries/DHT-sensor-library-1.4.5/DHT_U.cpp:15:
+/home/SYED_AMIR_ALI/Arduino/libraries/DHT-sensor-library-1.4.5/DHT_U.h:36:10: fatal error: Adafruit_Sensor.h: No such file or directory
+ #include <Adafruit_Sensor.h>
+          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+Alternatives for Adafruit_Sensor.h: []
+ResolveLibrary(Adafruit_Sensor.h)
+  -> candidates: []
+Multiple libraries were found for "DHT.h"
+  Used: /home/SYED_AMIR_ALI/Arduino/libraries/DHT-sensor-library-1.4.5
+  Not used: /home/SYED_AMIR_ALI/Arduino/libraries/DHT_sensor_library
+Multiple libraries were found for "WiFi.h"
+  Used: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/WiFi
+  Not used: /home/SYED_AMIR_ALI/Arduino/libraries/WiFi
+Using library ESP RainMaker at version 2.0.0 in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/RainMaker 
+Using library WiFi at version 2.0.0 in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/WiFi 
+Using library WiFiProv at version 2.0.0 in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/WiFiProv 
+Using library IRremote at version 4.1.2 in folder: /home/SYED_AMIR_ALI/Arduino/libraries/IRremote 
+Using library DHT sensor library at version 1.4.4 in folder: /home/SYED_AMIR_ALI/Arduino/libraries/DHT-sensor-library-1.4.5 
+Using library SimpleTimer at version 1.0.0 in folder: /home/SYED_AMIR_ALI/Arduino/libraries/SimpleTimer 
+Using library ESP Insights at version 1.0.0 in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/Insights 
+Using library SimpleBLE at version 2.0.0 in folder: /home/SYED_AMIR_ALI/.arduino15/packages/esp32/hardware/esp32/2.0.9/libraries/SimpleBLE 
+exit status 1
+
+Compilation error: exit status 1
