@@ -8,7 +8,7 @@
     "dev-vite": "concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" ",
     "dev-next": "concurrently \"nodemon server.js\" \"cd client && yarn dev\"",
     "dev": "concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" \"cd client && yarn dev\"",
-    "push-master": "git add . && git commit -m 'my first nodejs api with socket web dev!' && git remote add origin git@github.com:AmirWorkplace/nodejs-api.git && git push origin master"
+    "push-master": "git add . && git commit -m 'my first nodejs api with socket web dev!' && git push origin master"
   },
   "repository": "https://github.com/AmirWorkplace/jsps",
   "author": "SYED AMIR ALI",
