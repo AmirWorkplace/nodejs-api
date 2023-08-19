@@ -11,7 +11,6 @@ import authRouter from './routes/auth.js';
 import http from 'http';
 import { Server } from 'socket.io';
 import routerIpLocalServer from './routes/local/localServer.js';
-import path from 'path';
 
 // client domain origin route name
 const origin = process.env.CLIENT_SERVER_URL;
@@ -25,6 +24,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// allow all public's file
+app.use('/public', express.static('public'));
 
 // create http server
 const server = http.createServer(app);
@@ -49,8 +51,6 @@ io.on('connection', function (socket) {
 
   // get user data form client using socket connection
   socket.on('user_data_from_client', function (data) {
-    // console.log('\n\n\n\nClient Data:', data, '\n\n\n');
-
     // resend all the data into client
     io.emit('user_data_from_server', data);
   });
@@ -64,6 +64,18 @@ io.on('connection', function (socket) {
   socket.on('send_message', function (data) {
     socket.broadcast.emit('rcv_message', data);
     socket.broadcast.emit(data.email, data);
+  });
+
+  // get new uploaded file data from client and send into client
+  socket.on('file_uploaded', function (data) {
+    io.emit('file_received', data);
+    // console.log(data);
+  });
+
+  // get file data's id from client and send it into client
+  socket.on('send_delete_file_id', function (id) {
+    io.emit('received_delete_file_id', id);
+    console.log(id);
   });
 });
 
@@ -89,8 +101,6 @@ app.use('/main', routerIpLocalServer);
 // use error handler
 app.use(errorHandler);
 
-// allow all public's file
-app.use('/public', express.static('public'));
 // app.use('/routes/local/dist', express.static('routes/local/dist'));
 
 // listen our project's app on a port using express server

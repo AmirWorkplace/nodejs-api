@@ -1740,3 +1740,126 @@ http://localhost:5173/
  /* : JSON.stringify({
                 message: "I'm from client's file sender form",
               }) */,
+
+                        // console.log(url);
+          // formData.append('filename', 'No, File name are available here!');
+          // const senderFile = { ...file, name: filename };
+          // console.log(file, senderFile);
+          // file.name = filename;
+          /* const headers = {
+            'Content-Type':
+              'multipart/form-data; boundary=' + formData._boundary,
+            // 'Content-Type': 'application/json',
+          }; */
+          // console.log('filename: ', body, '\nfile: ', file);
+          // cb(null, new Date().toISOString() + '__' + file.originalname);
+          // console.log(file);.replace(/:/g, '_')
+          // console.log({ body: req.body });
+          // utils/pathHelper.js
+          // import path from 'path';
+
+          // // Determine the root directory path
+          // const rootDir = path.resolve(
+          //   new URL(import.meta.url).pathname,
+          //   '../../'
+          // );
+
+          // // Construct the path to the public folder
+          // const publicFolderPath = path.join(rootDir, 'public');
+
+          // export { publicFolderPath };
+
+    // '/file',rootDir + '/public/uploads/' + fieldname + '/' + filename,
+    // const filename = req.body.get('fieldname');
+    // console.log('filename', filename);
+    // console.log(path.join(publicPath, 'uploads', fieldname, filename));
+      /* .sort({ dateField: 1 }).exec(function (error, data) {
+          if (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Failed to fetch data!' });
+          } else if (!data.length) {
+            return res
+              .status(404)
+              .json({ message: 'No file data are available here!' });
+          } else return data;
+        }); */
+
+      // console.log(fileData);
+
+       // const [file, setFile] = useState(null);
+  // console.log(file);
+
+  // const [filename, setFilename] = useState('');
+      // if (action.payload) {
+      // (async function () {
+      //   const response = await fetch(url + '/main/file');
+      //   const data = await response.json();
+      //   console.log(data);
+
+      //   state.allFiles = await data;
+      //   return 0;
+      //   // setGetAllFiles(data);
+      // })();
+      // }
+    // {
+    //   description: "I'm From Development here, And Where are you from!",
+    //   email: 'amirralli300400@gmail.com',
+    //   id: 1,
+    // },
+
+    // console.log('Deleted File:', deletedFile);
+    // console.log(
+    //   '\n\n\n',
+    //   deletedFile,
+    //   '\n\n\n',
+    //   path.resolve(deletedFile.rootDir),
+    //   '\n\n\n'
+    // );
+    // const dltFilePath = path.resolve(deletedFile.rootDir);
+    // /public/uploads/photos/2023-08-19T05:50:12.426Z__Schematic_Esp32_Relay_2023-08-16.png
+    // console.log('Deleted File:', deletedFile);
+
+    // console.log(dltFilePath);
+
+  /* const deleteFileBySocketConnection = function () {
+    socket.emit('send_delete_file_id', id);
+
+    socket.on('received_delete_file_id', function (data) {
+      dispatch(deleteFileData(data));
+    });
+  };
+
+  useEffect(deleteFileBySocketConnection, [socket]); */
+    /* async function downloadFile() {
+    try {
+      const response = await fetch(`${url}/main/file/download`, {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(fileData),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) {
+        console.error('Failed to fetch file:', response.statusText);
+        return;
+      }
+
+      const blob = response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      const pathArr = fileData.path.split('/');
+      a.download = pathArr[pathArr.length - 1];
+      a.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  console.log('Response Status:', response.status);
+      console.log('Content Type:', response.headers.get('content-type'));
+      console.log('Blob:', blob);
+ */

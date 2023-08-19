@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllLatestFilesData } from '../../features/chat/chatSlice';
+import { io } from 'socket.io-client';
+
+const url = import.meta.env.VITE_SERVER_URL;
 
 export const FileSendBySocket = ({ file, setFile }) => {
-  // const [file, setFile] = useState(null);
-  // console.log(file);
+  const socket = io.connect(url);
+  const dispatch = useDispatch();
+
+  useEffect(
+    function () {
+      socket.on('file_received', function (data) {
+        // set our latest data in our redux store
+        dispatch(getAllLatestFilesData(data.file));
+      });
+    },
+    [socket]
+  );
 
   return (
     <div className="my-3 w-full flex items-center justify-center">
@@ -11,24 +26,28 @@ export const FileSendBySocket = ({ file, setFile }) => {
         onSubmit={async function (event) {
           event.preventDefault();
 
-          const url = import.meta.env.VITE_SERVER_URL + '/main/file';
+          const filename = new Date().toISOString() + '__' + file.name;
 
-          const body = new FormData();
-          body.append('filename', 'No, File name are available here!');
-          body.append('file', file);
-          body.append('filename', new Date().toISOString() + file.filename);
-          const headers = {
-            'Content-Type': 'application/json',
-          };
+          const formData = new FormData();
+          formData.append('fieldname', 'photos');
+          formData.append(
+            'filename',
+            filename.replace(/[$#@!)(\[\]+*&^%,~`'" ]/g, '')
+          );
+          formData.append('type', file.type);
+          formData.append('file', file);
 
           try {
-            const response = await fetch(url, {
+            const response = await fetch(url + '/main/file', {
               // headers,
               method: 'POST',
-              body: body,
+              body: formData,
             });
 
-            console.log(response);
+            const data = await response.json();
+
+            // create socket signal for fetching
+            socket.emit('file_uploaded', data);
           } catch (error) {
             console.log(error);
           }

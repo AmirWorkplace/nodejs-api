@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SocketForm from './test/SocketForm';
 import MessageBox from './test/MessageBox';
@@ -9,7 +9,8 @@ export const Chat = () => {
 
   return (
     <div className="w-full h-auto flex items-center justify-center flex-col">
-      <FileSender /> <SocketForm />
+      <FileSender />
+      <SocketForm />
       <MessageBox chatData={messageData} />
     </div>
   );

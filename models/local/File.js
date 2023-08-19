@@ -2,10 +2,12 @@ import Mongoose from 'mongoose';
 
 const FileSchema = Mongoose.Schema(
   {
-    filename: { required: true, trim: true, type: String },
-    fileSlug: { default: null, trim: false, type: String },
+    name: { required: true, trim: true, type: String },
+    type: { required: true, trim: true, type: String },
+    path: { required: true, trim: true, type: String },
+    dirPath: { default: null, trim: false, type: String },
   },
-  { collection: 'file', timestamps: true }
+  { collection: 'files', timestamps: true }
 );
 
 export default Mongoose.model('File', FileSchema);

@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+const url = import.meta.env.VITE_SERVER_URL;
 
 const initialState = {
-  messageData: [
-    // {
-    //   description: "I'm From Development here, And Where are you from!",
-    //   email: 'amirralli300400@gmail.com',
-    //   id: 1,
-    // },
-  ],
+  url,
+  messageData: [],
+  allFiles: [],
 };
 
 const chatSlice = createSlice({
@@ -53,8 +50,43 @@ const chatSlice = createSlice({
         state.messageData.splice(removeChatIndex, 1);
       }
     },
+
+    getAllFilesData: function (state, action) {
+      state.allFiles = action.payload;
+    },
+
+    getAllLatestFilesData: function (state, action) {
+      const newFileId = action.payload._id;
+
+      //check existing file id
+      const isExistFile = state.allFiles.some((file) => file._id === newFileId);
+      !isExistFile && state.allFiles.push(action.payload);
+    },
+
+    deleteFileData: function (state, action) {
+      const dltFileId = action.payload;
+
+      const findDltFileData = state.allFiles.find(
+        (file) => file._id === dltFileId
+      );
+
+      if (findDltFileData) {
+        const dltFileIndex = state.allFiles.indexOf(findDltFileData);
+
+        if (dltFileIndex !== -1) {
+          state.allFiles.splice(dltFileIndex, 1);
+          return;
+        }
+      }
+    },
   },
 });
 
 export default chatSlice.reducer;
-export const { addChatData, removeSingleChat } = chatSlice.actions;
+export const {
+  addChatData,
+  removeSingleChat,
+  getAllFilesData,
+  getAllLatestFilesData,
+  deleteFileData,
+} = chatSlice.actions;
