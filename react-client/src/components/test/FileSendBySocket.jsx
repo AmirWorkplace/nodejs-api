@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllLatestFilesData } from '../../features/chat/chatSlice';
+import {
+  getAllLatestFilesData,
+  setMessage,
+} from '../../features/chat/chatSlice';
 import { io } from 'socket.io-client';
 
 const url = import.meta.env.VITE_SERVER_URL;
 
-export const FileSendBySocket = ({ file, setFile }) => {
+export const FileSendBySocket = () => {
+  const [file, setFile] = useState(null);
+  const message = useSelector((state) => state.chat.message);
+
   const socket = io.connect(url);
   const dispatch = useDispatch();
 
@@ -16,42 +22,49 @@ export const FileSendBySocket = ({ file, setFile }) => {
         dispatch(getAllLatestFilesData(data.file));
       });
     },
-    [socket]
+    [socket, dispatch]
   );
+
+  async function fileFormHandler(event) {
+    event.preventDefault();
+
+    const filename = new Date().toISOString() + '__' + file.name;
+
+    const formData = new FormData();
+    formData.append('fieldname', 'photos');
+    formData.append(
+      'filename',
+      filename.replace(/[$#@!)(\[\]+*&^%,~`'" ]/g, '')
+    );
+    formData.append('type', file.type);
+    formData.append('file', file);
+
+    try {
+      const response = await fetch(url + '/main/file', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      dispatch(setMessage(data?.message));
+
+      // create socket signal for fetching
+      socket.emit('file_uploaded', data);
+      setFile(null);
+      await event.target.reset();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const filetype = file?.type.split('/');
+  const isImage = filetype?.includes('image');
 
   return (
     <div className="my-3 w-full flex items-center justify-center">
       <form
         method="post"
-        onSubmit={async function (event) {
-          event.preventDefault();
-
-          const filename = new Date().toISOString() + '__' + file.name;
-
-          const formData = new FormData();
-          formData.append('fieldname', 'photos');
-          formData.append(
-            'filename',
-            filename.replace(/[$#@!)(\[\]+*&^%,~`'" ]/g, '')
-          );
-          formData.append('type', file.type);
-          formData.append('file', file);
-
-          try {
-            const response = await fetch(url + '/main/file', {
-              // headers,
-              method: 'POST',
-              body: formData,
-            });
-
-            const data = await response.json();
-
-            // create socket signal for fetching
-            socket.emit('file_uploaded', data);
-          } catch (error) {
-            console.log(error);
-          }
-        }}
+        onSubmit={fileFormHandler}
         className="sm:w-96 h-90 w-72 bg-slate-700 rounded-lg p-4"
       >
         <h1 className="font-bold text-2xl text-cyan-500 text-center py-1">
@@ -85,13 +98,27 @@ export const FileSendBySocket = ({ file, setFile }) => {
               {file ? file.name : 'No file selected here!'}
             </span>
           </label>
-          {file && (
+          {file ? (
             <div className="outline-none border border-solid focus:border-cyan-500  h-72 border-slate-500 p-3 font-semibold text-[16px] tracking-wide font-mono rounded bg-slate-600 shadow-[0_4px_6px_0_rgba(0,0,0,0.12) p-1">
-              <img
-                className="w-full h-full rounded-md"
-                alt="view file"
-                src={URL.createObjectURL(file)}
-              />
+              {isImage ? (
+                <img
+                  className="w-full h-full rounded-md"
+                  alt="view file"
+                  src={URL.createObjectURL(file)}
+                />
+              ) : (
+                <iframe
+                  className="w-full h-full rounded-md"
+                  alt="view file"
+                  src={URL.createObjectURL(file)}
+                />
+              )}
+            </div>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <p className="text-sm font-semibold font-mono bg-green-500 text-slate-950 px-3 py-1 rounded-sm mt-3">
+                {message}
+              </p>
             </div>
           )}
         </div>
@@ -100,9 +127,6 @@ export const FileSendBySocket = ({ file, setFile }) => {
           <button
             type="submit"
             className="uppercase font-bold text-xl py-1 text-center bg-cyan-700 rounded duration-500 hover:text-slate-900 hover:bg-cyan-500 w-full"
-            onClick={function () {
-              // socket.emit('send_message', formData);
-            }}
           >
             send
           </button>

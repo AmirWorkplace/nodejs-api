@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "dev-vite": "concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" ",
+    "lampp": "sudo /opt/lampp/lampp start",
     "dev-next": "concurrently \"nodemon server.js\" \"cd client && yarn dev\"",
-    "dev": "concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" \"cd client && yarn dev\"",
+    "dev": "clear && concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" \"cd client && yarn dev\" \"cd ~/ && yarn mongodb \"",
     "push-master": "git add . && git commit -m 'my first nodejs api with socket web dev!' && git push origin master"
   },
   "repository": "https://github.com/AmirWorkplace/jsps",

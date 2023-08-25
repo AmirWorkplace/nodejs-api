@@ -3,6 +3,7 @@ const url = import.meta.env.VITE_SERVER_URL;
 
 const initialState = {
   url,
+  message: 'File Uploader!',
   messageData: [],
   allFiles: [],
 };
@@ -79,6 +80,10 @@ const chatSlice = createSlice({
         }
       }
     },
+
+    setMessage: function (state, action) {
+      state.message = action.payload;
+    },
   },
 });
 
@@ -89,4 +94,5 @@ export const {
   getAllFilesData,
   getAllLatestFilesData,
   deleteFileData,
+  setMessage,
 } = chatSlice.actions;

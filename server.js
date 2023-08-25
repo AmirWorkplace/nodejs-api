@@ -75,7 +75,6 @@ io.on('connection', function (socket) {
   // get file data's id from client and send it into client
   socket.on('send_delete_file_id', function (id) {
     io.emit('received_delete_file_id', id);
-    console.log(id);
   });
 });
 
@@ -101,8 +100,6 @@ app.use('/main', routerIpLocalServer);
 // use error handler
 app.use(errorHandler);
 
-// app.use('/routes/local/dist', express.static('routes/local/dist'));
-
 // listen our project's app on a port using express server
 server.listen(port, routerIPv4, function () {
   mongodbConnection();
@@ -112,8 +109,15 @@ server.listen(port, routerIPv4, function () {
   );
 });
 
-/* import crypto from 'crypto';
+/**
+ * @abstract {main}
+ * app.use('/routes/local/dist', express.static('routes/local/dist'));
+ * 
+ * 
+ * import crypto from 'crypto';
 app.use(express.static(path.join(__dirname, 'public')));
 console.log(
   crypto.createHash('sha256').update(crypto.randomBytes(32)).digest('hex')
-); */
+); 
+
+*/

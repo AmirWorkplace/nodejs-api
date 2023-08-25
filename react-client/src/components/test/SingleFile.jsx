@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteFileData } from '../../features/chat/chatSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteFileData, setMessage } from '../../features/chat/chatSlice';
 import { io } from 'socket.io-client';
 
 export const SingleFile = ({ url, fileData }) => {
-  const { name } = fileData;
+  const { name, type } = fileData;
+  const message = useSelector((state) => state.chat.message);
 
   const src = url + fileData.path;
   const dispatch = useDispatch();
@@ -13,8 +14,8 @@ export const SingleFile = ({ url, fileData }) => {
 
   // Add the event listener when the component mounts
   useEffect(() => {
-    const receivedDeleteFileId = (data) => {
-      dispatch(deleteFileData(data));
+    const receivedDeleteFileId = (id) => {
+      dispatch(deleteFileData(id));
     };
 
     socket.on('received_delete_file_id', receivedDeleteFileId);
@@ -38,8 +39,15 @@ export const SingleFile = ({ url, fileData }) => {
       const response = await fetch(`${url}/main/file/${id}`, {
         method: 'DELETE',
       });
+
       const data = await response.json();
 
+      // set message in my redux store
+      dispatch(setMessage(data?.message));
+      // dispatch delete single file delete slice
+      dispatch(deleteFileData(id));
+
+      // call function to send delete file id using socket connection
       deleteFileBySocketConnection();
     }
   }
@@ -54,6 +62,7 @@ export const SingleFile = ({ url, fileData }) => {
       });
 
       if (!response.ok) {
+        dispatch(setMessage('Failed to fetch file:' + response.statusText));
         console.error('Failed to fetch file:', response.statusText);
         return;
       }
@@ -71,6 +80,9 @@ export const SingleFile = ({ url, fileData }) => {
       console.error(error);
     }
   }
+
+  const filetype = type.split('/');
+  const isImage = filetype.includes('image');
 
   return (
     <div>
@@ -112,7 +124,15 @@ export const SingleFile = ({ url, fileData }) => {
             </svg>
           </button>
         </div>
-        <img className="w-full h-full rounded-md" alt="view file" src={src} />
+        {isImage ? (
+          <img className="w-full h-full rounded-md" alt="view file" src={src} />
+        ) : (
+          <iframe
+            className="w-full h-full rounded-md"
+            alt="view file"
+            src={src}
+          />
+        )}
       </div>
     </div>
   );

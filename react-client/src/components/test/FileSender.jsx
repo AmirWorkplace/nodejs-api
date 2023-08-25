@@ -9,7 +9,6 @@ const url = import.meta.env.VITE_SERVER_URL;
 export const FileSender = () => {
   const dispatch = useDispatch();
   const { allFiles } = useSelector((state) => state.chat);
-  const [file, setFile] = useState(null);
   const [fileSender, setFileSender] = useState(false);
 
   useEffect(() => {
@@ -53,7 +52,8 @@ export const FileSender = () => {
         style={{ transition: '2s' }}
       >
         <div className="w-full flex items-center justify-center">
-          <FileSendBySocket file={file} setFile={setFile} />
+          <FileSendBySocket /* file={file} setFile={setFile} ref={fileFormRef} */
+          />
         </div>
 
         {allFiles.length && (
