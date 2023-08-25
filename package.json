@@ -9,7 +9,7 @@
     "lampp": "sudo /opt/lampp/lampp start",
     "dev-next": "concurrently \"nodemon server.js\" \"cd client && yarn dev\"",
     "dev": "clear && concurrently \"nodemon server.js\" \"cd react-client && yarn dev\" \"cd client && yarn dev\" \"cd ~/ && yarn mongodb \"",
-    "push-master": "git add . && git commit -m 'my first nodejs api with socket web dev!' && git push origin master"
+    "git-push": "git add . && git commit -m 'my first nodejs api with socket web dev!' && git push origin work-on-nextjs-client"
   },
   "repository": "https://github.com/AmirWorkplace/jsps",
   "author": "SYED AMIR ALI",
