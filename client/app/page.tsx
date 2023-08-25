@@ -1,5 +1,5 @@
-'use client';
-import '../globals.css';
+// 'use client';
+import './globals.css';
 import Link from 'next/link';
 import { UserButton } from '@clerk/nextjs';
 import RouteTest from '@/components/test/RouteTest';

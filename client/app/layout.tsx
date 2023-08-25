@@ -2,6 +2,7 @@ import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
+import { FC, ReactNode } from 'react';
 
 export const metadata = {
   title: 'Halal Foods',
@@ -10,11 +11,11 @@ export const metadata = {
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export const RootLayout: FC<RootLayoutProps> = ({ children }) => {
   return (
     <ClerkProvider>
       <html lang="en">
@@ -28,4 +29,6 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-}
+};
+
+export default RootLayout;
