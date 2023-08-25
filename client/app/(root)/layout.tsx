@@ -1,8 +1,14 @@
+import Footer from '@/components/shared/Footer';
+import Navbar from '@/components/shared/Navbar';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Inter } from 'next/font/google';
 
 export const metadata = {
-  title: 'Next.js 13 with Clerk',
+  title: 'Halal Foods',
+  description: 'No descriptions are available here!!',
 };
+
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -12,7 +18,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body
+          className={`${inter.className} bg-white dark:bg-black text-black dark:text-white`}
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </body>
       </html>
     </ClerkProvider>
   );
